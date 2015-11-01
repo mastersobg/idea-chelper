@@ -471,6 +471,7 @@ public class SolutionGenerator {
 		toImport.add("java.io.InputStream");
 		toImport.add("java.io.OutputStream");
 		toImport.add("java.io.IOException");
+		toImport.addAll(getDefaultImports());
 		if (task.input.type != StreamConfiguration.StreamType.STANDARD)
 			toImport.add("java.io.FileInputStream");
 		if (task.output.type != StreamConfiguration.StreamType.STANDARD)
@@ -487,12 +488,12 @@ public class SolutionGenerator {
 	public static void createSourceFile(final Task task, final Project project) {
 		ApplicationManager.getApplication().runWriteAction(new Runnable() {
 			public void run() {
-				String outputDirectory = Utilities.getData(project).outputDirectory;
+				String outputDirectory = Utilities.getData(project).outputDirectory  + "/" + task.name;
 				VirtualFile directory = FileUtilities.createDirectoryIfMissing(project, outputDirectory);
 				if (directory == null)
 					return;
 				for (VirtualFile file : directory.getChildren()) {
-					if ("java".equals(file.getExtension())) {
+					if ("java".equals(file.getExtension()) && (task.mainClass + ".java").equals(file.getName())) {
 						try {
 							file.delete(null);
 						} catch (IOException e) {
@@ -512,20 +513,28 @@ public class SolutionGenerator {
 		});
 	}
 
+	private static Set<String> getDefaultImports() {
+		Set<String> set = new HashSet<String>();
+		set.add("java.util.*");
+		set.add("java.io.*");
+		set.add("static java.lang.Math.*");
+		return set;
+	}
+
 	public static void createSourceFile(final Project project, final TopCoderTask task) {
 		ApplicationManager.getApplication().runWriteAction(new Runnable() {
 			public void run() {
 				SolutionGenerator generator = new SolutionGenerator(
 					new HashSet<String>(Arrays.asList(Utilities.getData(project).excludedPackages)),
 					new MainFileTemplate("%IMPORTS%\npublic %INLINED_SOURCE%", Collections.<PsiElement>emptySet(),
-					Collections.<String>emptySet()), false, task.getMethod(project));
+					getDefaultImports()), false, task.getMethod(project));
 				String text = generator.createInlinedSource();
 				String outputDirectory = Utilities.getData(project).outputDirectory;
 				VirtualFile directory = FileUtilities.createDirectoryIfMissing(project, outputDirectory);
 				if (directory == null)
 					return;
 				for (VirtualFile file : directory.getChildren()) {
-					if ("java".equals(file.getExtension())) {
+					if ("java".equals(file.getExtension()) && (task.name + ".java").equals(file.getName())) {
 						try {
 							file.delete(null);
 						} catch (IOException e) {

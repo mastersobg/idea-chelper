@@ -1,8 +1,8 @@
 <idea-plugin version="2">
   <name>CHelper</name>
   <description>Inlines library code and provides testing framework</description>
-  <version>4.0.7</version>
-  <vendor>Egor Kulikov</vendor>
+  <version>4.0.8</version>
+  <vendor>Egor Kulikov (Ivan Gorbachev fixes)</vendor>
   <idea-version since-build="139.0"/>
 
   <application-components>

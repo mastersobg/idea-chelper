@@ -63,6 +63,9 @@ public class CodeGenerationUtilities {
                 "\n" +
                 "import %InputClassFQN%;\n" +
                 "import %OutputClassFQN%;\n" +
+                "import java.util.*;\n" +
+                "import java.io.*;\n" +
+                "import static java.lang.Math.*;\n" +
                 "\n" +
                 "public class %TaskClass% {\n" +
                 "    public void solve(int testNumber, %InputClass% in, %OutputClass% out) {\n" +
@@ -142,6 +145,10 @@ public class CodeGenerationUtilities {
         if (file != null)
             return FileUtilities.readTextFile(file);
         String template = "package %package%;\n" +
+                "\n" +
+                "import java.util.*;\n" +
+                "import java.io.*;\n" +
+                "import static java.lang.Math.*;\n" +
                 "\n" +
                 "public class %TaskClass% {\n" +
                 "    public %Signature% {\n" +

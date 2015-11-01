@@ -76,6 +76,7 @@ public class TaskConfiguration extends ModuleBasedConfiguration<JavaRunConfigura
                 String[] vmParameters = configuration.vmArgs.split(" ");
                 for (String parameter : vmParameters)
                     parameters.getVMParametersList().add(parameter);
+				parameters.getVMParametersList().add("-DLOCAL_DEBUG_ENABLED");
                 if (configuration.failOnOverflow) {
                     String path = TopCoderAction.getJarPathForClass(ch.eiafr.cojac.Cojac.class);
                     parameters.getVMParametersList().add("-javaagent:" + path + "=-e -ints -longs -casts -maths");
