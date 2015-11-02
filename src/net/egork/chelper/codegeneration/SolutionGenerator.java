@@ -506,8 +506,8 @@ public class SolutionGenerator {
 				String source = generator.createInlinedSource();
 				final VirtualFile file = FileUtilities.writeTextFile(directory, task.mainClass + ".java", source);
 				FileUtilities.synchronizeFile(file);
-//				ReformatCodeProcessor processor = new ReformatCodeProcessor(PsiManager.getInstance(project).findFile(file), false);
-//				processor.run();
+				ReformatCodeProcessor processor = new ReformatCodeProcessor(PsiManager.getInstance(project).findFile(file), false);
+				processor.run();
 				FileUtilities.synchronizeFile(file);
 			}
 		});
@@ -544,8 +544,8 @@ public class SolutionGenerator {
 				}
 				final VirtualFile file = FileUtilities.writeTextFile(directory, task.name + ".java", text);
 				FileUtilities.synchronizeFile(file);
-//				ReformatCodeProcessor processor = new ReformatCodeProcessor(PsiManager.getInstance(project).findFile(file), false);
-//				processor.run();
+				ReformatCodeProcessor processor = new ReformatCodeProcessor(PsiManager.getInstance(project).findFile(file), false);
+				processor.run();
 				String source = FileUtilities.readTextFile(file);
 				VirtualFile virtualFile = FileUtilities.writeTextFile(LocalFileSystem.getInstance().findFileByPath(System.getProperty("user.home")), ".java", source);
 				new File(virtualFile.getCanonicalPath()).deleteOnExit();
