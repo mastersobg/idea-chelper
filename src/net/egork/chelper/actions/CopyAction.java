@@ -30,7 +30,8 @@ public class CopyAction extends AnAction {
         RunConfiguration configuration = selectedConfiguration.getConfiguration();
         if (configuration instanceof TaskConfiguration) {
             Task task = ((TaskConfiguration)configuration).getConfiguration();
-            VirtualFile file = FileUtilities.getFile(project, Utilities.getData(project).outputDirectory + "/" + task.mainClass +".java");
+            VirtualFile file = FileUtilities.getFile(project, Utilities.getData(project).outputDirectory + "/" +
+                task.name + "/" + task.mainClass +".java");
             if (file == null)
                 return;
             String content = FileUtilities.readTextFile(file);
